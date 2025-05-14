@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import chalk from 'chalk';
 import helmet from 'helmet';
-import { PORT } from './src/utils/constant.js';
+import { NODE_ENV, PORT } from './src/utils/constant.js';
 import { corsOptions } from './src/configs/corsOptions.js';
 import { router } from './src/routes/mainRoute.js';
 import { errorHandler, notFount } from './src/middlewares/errorHandler.js';
@@ -40,5 +40,8 @@ app.get('/test', (req, res) => {
 
 // server
 app.listen(PORT, () => {
-  console.log('server running on port', PORT);
+  console.log(
+    `Server started on PORT: ${PORT} in ${NODE_ENV} mode.`
+  );
 });
+
