@@ -71,6 +71,8 @@ export const errorHandler = (error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
   error.status = error.status || 'error';
 
+  console.log('Error Handler:', error);
+
   if (process.env.NODE_ENV === 'DEV') {
     devErrors(res, error);
   } else if (process.env.NODE_ENV === 'PROD') {
@@ -81,5 +83,5 @@ export const errorHandler = (error, req, res, next) => {
     prodErrors(res, error);
   }
 
-  res.status(500).json({ error: error.message });
+  res.status(500).json({ error: error });
 };

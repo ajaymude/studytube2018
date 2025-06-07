@@ -3,3 +3,24 @@
 
 // use the mongoose middlewares and method for password  creation and token 
 //
+
+
+
+// it should have access token and refresh token logic 
+
+// learn about the populate
+
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  password: { type: String, required: true, select: false }
+});
+
+
+const User = mongoose.model('User', userSchema);
+
+// This will NOT return the password field
+const user = await User.findOne({ name: 'Alice' });
+
+// This WILL return the password field
+const userWithPassword = await User.findOne({ name: 'Alice' }).select('+password');

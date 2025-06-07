@@ -1,6 +1,7 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';
+import compression    from 'compression';
 import cookieParser from 'cookie-parser';
 
 import { router } from './src/routes/mainRoute.js';
@@ -17,10 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
+app.use(compression());
 app.use(morganLogger);
 app.use(rateLimiter);
-app.use(cors(corsOptions));
 app.use(cookieParser(cookieOptions));
+app.use(cors(corsOptions));
 
 // routes
 app.use(router);

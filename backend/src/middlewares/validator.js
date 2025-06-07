@@ -4,12 +4,7 @@ export const signUpValidation = [
   body('firstName').notEmpty().withMessage('First name is required'),
   body('lastName').notEmpty().withMessage('Last name is required'),
   body('email').isEmail().withMessage('Invalid email format'),
-  body('mobile')
-    .isLength({ min: 7, max: 15 })
-    .withMessage('Mobile number must be between 7 and 15 digits'),
-  body('password')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
 
   // Middleware to handle validation result and send response
   (req, res, next) => {

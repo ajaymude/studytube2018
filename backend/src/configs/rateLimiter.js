@@ -7,5 +7,3 @@ export const rateLimiter = rateLimit({
   legacyHeaders: false, // Disable `X-RateLimit-*` headers (use only if needed)
   message: 'Too many requests, please try again later.',
 });
-
-
