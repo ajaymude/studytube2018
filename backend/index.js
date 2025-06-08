@@ -1,7 +1,7 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';
-import compression from 'compression';
+import compression    from 'compression';
 import cookieParser from 'cookie-parser';
 
 import { router } from './src/routes/mainRoute.js';
@@ -18,17 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
-app.use(compression());
 app.use(morganLogger);
+app.use(compression());
 app.use(rateLimiter);
-app.use(cookieParser());
-// 3️⃣ Enable CORS for every origin with credentials
-app.use(
-  cors({
-    origin: true, // reflect request Origin header back
-    credentials: true, // allow Set-Cookie and Cookie headers
-  })
-);
+app.use(cookieParser(cookieOptions));
+app.use(cors(corsOptions));
 
 // routes
 app.use(router);

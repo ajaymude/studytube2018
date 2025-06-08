@@ -1,21 +1,13 @@
-const allowedOrigins = [
-  'http://localhost:8000',
-  'http://localhost:5173',
-  'https://example.com'
-];
+const allowedOrigins = ['http://localhost:8000', 'https://example.com', 'http://localhost:5173'];
 
 export const corsOptions = {
-  origin: (origin, callback) => {
-    // allow requests with no origin (e.g. mobile apps, curl)
+  origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    callback(new Error('Not allowed by CORS'));
   },
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
-  exposedHeaders: ['set-cookie'],   // if you ever need to inspect cookies in JS
-  credentials: true,                // required to include cookies
-  preflightContinue: false,         // pass the CORS preflight response to next()
-  optionsSuccessStatus: 204         // some legacy browsers choke on 200
+  credentials: true, // if you need to include cookies
+  optionsSuccessStatus: 200,
 };
