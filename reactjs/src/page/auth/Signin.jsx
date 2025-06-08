@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSigninMutation } from "../../store/auth/authApiSlice";
+import { toast } from "react-toastify";
+import { setCredentials } from "../../store/auth/authSlice";
 
 const Signin = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [signin, { isLoading }] = useSigninMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // TODO: Implement login functionality
-    console.log('Logging in with:', credentials);
+    toast.info("Logging in...");
+      const res = await signin(formData).unwrap();
+      dispatch(setCredentials({ ...res?.data}));
+      navigate('/');
   };
 
   return (
@@ -23,28 +41,34 @@ const Signin = () => {
         <h2 className="text-2xl font-semibold text-center mb-6">Log In</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
               type="email"
               name="email"
               id="email"
-              value={credentials.email}
+              value={formData.email}
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
               type="password"
               name="password"
               id="password"
-              value={credentials.password}
+              value={formData.password}
               onChange={handleChange}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
@@ -58,11 +82,14 @@ const Signin = () => {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account? <Link to="/sign-up" className="text-blue-600 hover:underline">Sign up</Link>
+          Don't have an account?{" "}
+          <Link to="/sign-up" className="text-blue-600 hover:underline">
+            Sign up
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default  Signin;
+export default Signin;

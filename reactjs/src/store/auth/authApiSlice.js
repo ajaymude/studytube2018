@@ -3,27 +3,27 @@ import { apiSlice } from "../apiSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    singup: builder.mutation({
+    signup: builder.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/sign-up`,
         method: "POST",
         body: data,
       }),
-      singin: builder.mutation({
-        query: (data) => ({
-          url: `${AUTH_URL}/sign-in`,
-          method: "POST",
-          body: data,
-        }),
-      }),
-      singout: builder.mutation({
-        query: () => ({
-          url: `${AUTH_URL}/sign-out`,
-          method: "POST",
-        }),
+    }),
+    signin: builder.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/sign-in`,
+        method: "POST",
+        body: data,
       }),
     }),
-    getuser: builder.mutation({
+    signout: builder.mutation({
+      query: () => ({
+        url: `${AUTH_URL}/sign-out`,
+        method: "POST",
+      }),
+    }),
+    getUser: builder.mutation({
       query: (data) => ({
         url: `${AUTH_URL}/current-user`,
         method: "POST",
@@ -34,6 +34,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useSingupMutation,
-
+  useSignupMutation,
+  useSigninMutation,
+  useSignoutMutation,
+  useGetUserMutation,
 } = authApiSlice;

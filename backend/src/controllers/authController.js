@@ -2,6 +2,8 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { ApiError } from '../utils/ApiError.js';
+import createError from 'http-errors';
+import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
 const generateAccessAndRefereshTokens = async userId => {
   try {
@@ -14,19 +16,16 @@ const generateAccessAndRefereshTokens = async userId => {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(500, 'Something went wrong while generating referesh and access token');
+    throw createError(StatusCodes.INTERNAL_SERVER_ERROR, 'Something went wrong while generating refresh and access tokens');
   }
 };
 
 export const signUp = asyncHandler(async (req, res) => {
-  console.log('Sign Up Request:', req.body);
-
   const { firstName, lastName, email, password } = req.body;
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error('User already exists with this email');
+    throw createError(StatusCodes.BAD_REQUEST, 'User already exists with this email');
   }
 
   const user = await User.create({
@@ -39,10 +38,13 @@ export const signUp = asyncHandler(async (req, res) => {
   const createdUser = await User.findById(user._id).select('-password -refreshToken');
 
   if (!createdUser) {
-    throw new ApiError(500, 'Something went wrong while registering the user');
+    throw createError(StatusCodes.INTERNAL_SERVER_ERROR, 'Something went wrong while registering the user');
   }
-
-  return res.status(201).json(new ApiResponse(200, createdUser, 'User registered Successfully'));
+  return res.status(StatusCodes.CREATED).json({
+    status: 'success',
+    message: getReasonPhrase(StatusCodes.CREATED), // "Created"
+    data: createdUser,
+  });
 });
 
 export const signIn = asyncHandler(async (req, res) => {
@@ -50,14 +52,13 @@ export const signIn = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new ApiError(404, 'User does not exist');
+    throw createError(StatusCodes.NOT_FOUND, 'User does not exist');
   }
 
   const isPasswordValid = await user.isPasswordCorrect(password);
-  console.log('Is password valid:', isPasswordValid);
 
   if (!isPasswordValid) {
-    throw new ApiError(401, 'Invalid user credentials');
+    throw createError(StatusCodes.UNAUTHORIZED, 'Invalid user credentials');
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
@@ -69,7 +70,7 @@ export const signIn = asyncHandler(async (req, res) => {
     secure: true,
   };
 
-  //   const options = {
+  // const options = {
   //   httpOnly: true,
   //   secure: true,
   //   sameSite: 'Strict',
@@ -77,20 +78,16 @@ export const signIn = asyncHandler(async (req, res) => {
   // };
 
   return res
-    .status(200)
+    .status(StatusCodes.OK) // 200
     .cookie('accessToken', accessToken, options)
     .cookie('refreshToken', refreshToken, options)
-    .json(
-      new ApiResponse(
-        200,
-        {
-          user: loggedInUser,
-          accessToken,
-          refreshToken,
-        },
-        'User logged In Successfully'
-      )
-    );
+    .json({
+      status: 'success', // human-readable status
+      message: getReasonPhrase(StatusCodes.OK), // "OK"
+      data: {
+        user: loggedInUser,
+      },
+    });
 });
 
 export const singOut = asyncHandler(async (req, res) => {

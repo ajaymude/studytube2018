@@ -16,8 +16,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
 
-      <Route path="sign-up" element={<SignupPage />} />
-      <Route path="sign-in" element={<Signin />} />
+      <Route path="/sign-up" element={<SignupPage />} />
+      <Route path="/sign-in" element={<Signin />} />
 
       <Route path="" element={<PrivateRoute />}>
         <Route path="/profile" element={<Test />} />
@@ -28,3 +28,6 @@ const router = createBrowserRouter(
 );
 
 export default router;
+
+
+// later apply the lazy loading for the routes
