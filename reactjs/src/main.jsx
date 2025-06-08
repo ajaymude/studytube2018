@@ -1,8 +1,10 @@
-import store from "./store/store";
+import React from "react";
 import router from "./router/router";
-import { Provider } from "react-redux";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "./store/store";
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,8 +13,11 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <ToastContainer />
-      <RouterProvider router={router} />
+      {/* PersistGate delays rendering until rehydration is complete */}
+      <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer />
+        <RouterProvider router={router} />
+      </PersistGate>
     </Provider>
   </StrictMode>
 );
