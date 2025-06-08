@@ -1,7 +1,10 @@
-// Cookie options
+// Cookie options (works in both dev and production)
 export const cookieOptions = {
-  httpOnly: true, // Prevents client-side JS access for security
-  secure: process.env.NODE_ENV === 'production', // Uses HTTPS in production
-  sameSite: 'strict', // Prevents CSRF attacks
-  maxAge: 60 * 60 * 1000, // 1 hour expiration
+  httpOnly: true,                           // no JS access
+  secure: process.env.NODE_ENV === 'production', 
+  sameSite: process.env.NODE_ENV === 'production' 
+    ? 'none'   // allow cross-site in prod (requires secure:true)
+    : 'lax',   // more forgiving in dev over HTTP
+  maxAge: 60 * 60 * 1000,                   // 1 hour
+  path: '/',                                // send on all routes
 };

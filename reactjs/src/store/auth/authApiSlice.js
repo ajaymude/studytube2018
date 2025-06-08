@@ -23,12 +23,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    getUser: builder.mutation({
-      query: (data) => ({
+    getUser: builder.query({
+      query: () => ({
         url: `${AUTH_URL}/current-user`,
-        method: "POST",
-        body: data,
+        method: 'GET',
       }),
+      keepUnusedDataFor: 60,
+      providesTags: ['User'],
     }),
   }),
 });
@@ -37,5 +38,5 @@ export const {
   useSignupMutation,
   useSigninMutation,
   useSignoutMutation,
-  useGetUserMutation,
+  useGetUserQuery,
 } = authApiSlice;
