@@ -23,7 +23,7 @@ const Signin = () => {
 
   useEffect(() => {
     if (userInfo?.user) {
-      navigate("/sign-in");
+      navigate("/");
     }
   }, [navigate, userInfo]);
 

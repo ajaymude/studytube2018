@@ -3,13 +3,11 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AdminRoute = () => {
-  const { userInfo } = useSelector(s => s.auth);
-  if (!userInfo) {
-    // not logged in
+  const { userInfo } = useSelector((state) => state.auth);
+  if (!userInfo?.user) {
     return <Navigate to="/sign-in" replace />;
   }
-  // only admin may pass
-  if (userInfo.role !== "admin") {
+  if (userInfo?.user?.role !== "admin") {
     return <Navigate to="/" replace />;
   }
   return <Outlet />;

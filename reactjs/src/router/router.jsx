@@ -8,13 +8,14 @@ import Home from "../page/Home";
 import SignupPage from "../page/auth/Signup";
 import Signin from "../page/auth/Signin";
 import NotFoundPage from "../page/NotFoundPage";
-import Exams from "../page/study/Exams";
-import Subjects from "../page/study/Subjects";
-import Chapters from "../page/study/Chapters";
-import Videos from "../page/study/Videos";
-import Player from "../page/study/Player";
-import PrivateRoute from "./PrivateRoute";
+import Exams from "../page/user/Exams";
+import Subjects from "../page/user/Subjects";
+import Chapters from "../page/user/Chapters";
+import Videos from "../page/user/Videos";
+import Player from "../page/user/Player";
 import UserRoute from "./UserRoute";
+import AdminRoute from "./AdminRoute";
+import Test from "../page/admin/Test";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,13 @@ const router = createBrowserRouter(
         <Route
           path="exams/:exam/:subject/:chapter/:videoId"
           element={<Player />}
+        />
+      </Route>
+
+      <Route element={<AdminRoute />}>
+        <Route
+          path="/admin/test"
+          element={<Test />}
         />
       </Route>
 
