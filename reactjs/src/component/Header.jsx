@@ -19,7 +19,7 @@ const Navbar = () => {
     try {
       await signout().unwrap();
       dispatch(signOut());
-      await persistor.purge(); 
+      await persistor.purge();
       navigate("/sign-in");
     } catch (err) {
       console.error(err);
@@ -37,20 +37,24 @@ const Navbar = () => {
   return (
     <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold">          <Link to="/" className="text-gray-600 hover:text-gray-900">
-           Studytube2018
-          </Link></div>
+        <div className="text-2xl font-bold">
+          {" "}
+          <Link to="/" className="text-gray-600 hover:text-gray-900">
+            Studytube2018
+          </Link>
+        </div>
         <nav className="hidden md:flex space-x-6">
-
           <Link to="/exams" className="text-gray-600 hover:text-gray-900">
             Exams
           </Link>
           <Link to="/subjects" className="text-gray-600 hover:text-gray-900">
             Subjects
           </Link>
-          <Link to="/user" className="text-gray-600 hover:text-gray-900">
-            User
-          </Link>
+          {userInfo?.user && (
+            <Link to="/user" className="text-gray-600 hover:text-gray-900">
+              User
+            </Link>
+          )}
           {userInfo?.user ? (
             <button
               onClick={signOutHandler}
