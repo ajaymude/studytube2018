@@ -35,37 +35,37 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
+    <header className="bg-[#36454F] shadow fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="text-2xl font-bold">
           {" "}
-          <Link to="/" className="text-gray-600 hover:text-gray-900">
+          <Link to="/" className="text-white hover:text-gray-900">
             Studytube2018
           </Link>
         </div>
         <nav className="hidden md:flex space-x-6">
-          <Link to="/exams" className="text-gray-600 hover:text-gray-900">
+          <Link to="/exams" className="text-white hover:text-gray-900">
             Exams
           </Link>
-          <Link to="/subjects" className="text-gray-600 hover:text-gray-900">
+          <Link to="/subjects" className="text-white hover:text-gray-900">
             Subjects
           </Link>
           {userInfo?.user && (
-            <Link to="/user" className="text-gray-600 hover:text-gray-900">
+            <Link to="/user" className="text-white hover:text-gray-900">
               User
             </Link>
           )}
           {userInfo?.user ? (
             <button
               onClick={signOutHandler}
-              className="block text-gray-600 hover:text-gray-900"
+              className="block text-white hover:text-gray-900"
             >
               Sign-out
             </button>
           ) : (
             <button
               onClick={singInHandler}
-              className="block text-gray-600 hover:text-gray-900"
+              className="block text-white hover:text-gray-900"
             >
               Sign-in
             </button>
@@ -81,27 +81,27 @@ const Navbar = () => {
       </div>
       {isOpen && (
         <nav className="md:hidden bg-white px-4 pb-4 pt-2 space-y-2">
-          <Link to="/" className="block text-gray-600 hover:text-gray-900">
+          <Link to="/" className="block text-white hover:text-gray-900">
             Home
           </Link>
-          <Link to="/about" className="block text-gray-600 hover:text-gray-900">
+          <Link to="/about" className="block text-white hover:text-gray-900">
             About
           </Link>
           <Link
             to="/services"
-            className="block text-gray-600 hover:text-gray-900"
+            className="block text-white hover:text-gray-900"
           >
             Services
           </Link>
           <Link
             to="/contact"
-            className="block text-gray-600 hover:text-gray-900"
+            className="block text-white hover:text-gray-900"
           >
             Contact
           </Link>
           <Link
             to="/sign-in"
-            className="block text-gray-600 hover:text-gray-900"
+            className="block text-white hover:text-gray-900"
           >
             Sign-in
           </Link>

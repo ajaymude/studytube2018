@@ -19,7 +19,7 @@ const App = () => {
     navigate(-1); // Go back one step in history
   };
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#000000]">
       <header>
         <Navbar />
       </header>

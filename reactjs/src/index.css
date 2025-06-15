@@ -1,1 +1,9 @@
 @import "tailwindcss";
+/* index.css */
+html,
+body {
+  /* All normal text will inherit this */
+  color: white;
+  background-color: #000000;
+}
+

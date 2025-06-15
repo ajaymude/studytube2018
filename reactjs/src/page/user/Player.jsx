@@ -274,9 +274,9 @@ const Player = () => {
                 >
                   <div
                     onClick={changeVideo} // Pass the ID as ayou route param
-                    className="w-full max-w-xs bg-white rounded-lg shadow hover:shadow-lg transition p-2"
+                    className="w-full max-w-xs bg-[#36454F] rounded-lg shadow hover:shadow-lg transition p-2"
                   >
-                    <div className="w-full h-44 bg-gray-200 rounded-lg overflow-hidden">
+                    <div className="w-full h-44 bg-[#36454F] rounded-lg overflow-hidden">
                       <img
                         src={
                           thumbnail ||
