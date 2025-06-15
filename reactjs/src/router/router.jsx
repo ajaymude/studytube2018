@@ -21,7 +21,6 @@ const router = createBrowserRouter(
       <Route path="sign-up" element={<SignupPage />} />
       <Route path="sign-in" element={<Signin />} />
 
-
       <Route path="exams" element={<Exams />} />
       <Route path="exams/:exam" element={<Subjects />} />
       <Route path="exams/:exam/:subject" element={<Chapters />} />

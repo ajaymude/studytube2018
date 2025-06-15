@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,7 +41,12 @@ const SignupPage = () => {
     }
 
     try {
-      const res = await signup({ firstName, lastName, email, password }).unwrap();
+      const res = await signup({
+        firstName,
+        lastName,
+        email,
+        password,
+      }).unwrap();
       dispatch(setCredentials({ ...res.data }));
       navigate("/");
     } catch (err) {
@@ -56,7 +61,10 @@ const SignupPage = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* First Name */}
           <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="firstName"
+              className="block text-sm font-medium text-gray-700"
+            >
               First Name
             </label>
             <input
@@ -71,7 +79,10 @@ const SignupPage = () => {
 
           {/* Last Name */}
           <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="lastName"
+              className="block text-sm font-medium text-gray-700"
+            >
               Last Name
             </label>
             <input
@@ -86,7 +97,10 @@ const SignupPage = () => {
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -102,7 +116,10 @@ const SignupPage = () => {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -118,7 +135,10 @@ const SignupPage = () => {
 
           {/* Confirm Password */}
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
             <input

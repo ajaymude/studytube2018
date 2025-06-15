@@ -1,35 +1,32 @@
-import React, { useEffect } from "react";
 import Navbar from "./component/Header";
 import Footer from "./component/Footer";
-import { Outlet } from "react-router-dom";
-import { useGetUserQuery } from "./store/auth/authApiSlice";
-import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from "./store/auth/authSlice";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const App = () => {
-    const dispatch = useDispatch();
-  const { userInfo } = useSelector(s => s.auth);
-  const { data: user, isLoading, isError } = useGetUserQuery();
+    const navigate = useNavigate();
 
-  console.log(user?.data)
-
-  useEffect(() => {
-    if (user) dispatch(setCredentials(user?.data));
-  }, [user, dispatch]);
-
+  // To go back:
+  const handleGoBack = () => {
+    navigate(-1); // Go back one step in history
+  };
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header */}
       <header>
         <Navbar />
       </header>
 
-      {/* Main content grows to fill */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto mt-20">
+              <button
+        onClick={handleGoBack}
+        className="flex items-center gap-2 px-3 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Go Back
+      </button>
         <Outlet />
       </main>
 
-      {/* Footer */}
       <footer>
         <Footer />
       </footer>

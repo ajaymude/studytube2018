@@ -44,7 +44,7 @@ const Card = ({ title = "test" }) => {
   ];
 
   return (
-    <div className="mt-20">
+    <div >
       <button
         onClick={handleGoBack}
         className="flex items-center gap-2 px-3 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"

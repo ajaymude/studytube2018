@@ -50,7 +50,7 @@ const Exams = () => {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-4 mt-20 mr-4 ml-4 mb-4 flex-wrap justify-center">
+    <div className="grid grid-cols-4 gap-4  mr-4 ml-4 mb-4 flex-wrap justify-center">
       {exams.map((subject, index) => (
         <Cards key={index} title={subject} />
       ))}
