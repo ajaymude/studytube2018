@@ -40,11 +40,11 @@ const Card = ({ title = "test" }) => {
     "Ring Theory",
     "Field Theory",
     "Transformation Geometry",
-    "Applied Mathematics"
+    "Applied Mathematics",
   ];
 
   return (
-    <div >
+    <div>
       <button
         onClick={handleGoBack}
         className="flex items-center gap-2 px-3 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"

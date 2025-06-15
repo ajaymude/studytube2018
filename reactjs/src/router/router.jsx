@@ -13,6 +13,8 @@ import Subjects from "../page/study/Subjects";
 import Chapters from "../page/study/Chapters";
 import Videos from "../page/study/Videos";
 import Player from "../page/study/Player";
+import PrivateRoute from "./PrivateRoute";
+import UserRoute from "./UserRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +27,12 @@ const router = createBrowserRouter(
       <Route path="exams/:exam" element={<Subjects />} />
       <Route path="exams/:exam/:subject" element={<Chapters />} />
       <Route path="exams/:exam/:subject/:chapter" element={<Videos />} />
-      <Route path="exams/:exam/:subject/:chapter/:videoId" element={<Player />} />
+      <Route element={<UserRoute />}>
+        <Route
+          path="exams/:exam/:subject/:chapter/:videoId"
+          element={<Player />}
+        />
+      </Route>
 
       <Route path="*" element={<NotFoundPage />} />
     </Route>

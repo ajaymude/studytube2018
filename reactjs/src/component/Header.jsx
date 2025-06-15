@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignoutMutation } from "../store/auth/authApiSlice";
 import { signOut } from "../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { persistor } from "../store/store";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,15 @@ const Navbar = () => {
     try {
       await signout().unwrap();
       dispatch(signOut());
+      await persistor.purge(); 
+      navigate("/sign-in");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const singInHandler = async () => {
+    try {
       navigate("/sign-in");
     } catch (err) {
       console.error(err);
@@ -27,14 +37,11 @@ const Navbar = () => {
   return (
     <header className="bg-white shadow fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="text-2xl font-bold">YourAppName</div>
+        <div className="text-2xl font-bold">          <Link to="/" className="text-gray-600 hover:text-gray-900">
+           Studytube2018
+          </Link></div>
         <nav className="hidden md:flex space-x-6">
-          <Link to="/" className="text-gray-600 hover:text-gray-900">
-            Home
-          </Link>
-          <Link to="/profile" className="text-gray-600 hover:text-gray-900">
-            profile
-          </Link>
+
           <Link to="/exams" className="text-gray-600 hover:text-gray-900">
             Exams
           </Link>
@@ -44,7 +51,7 @@ const Navbar = () => {
           <Link to="/user" className="text-gray-600 hover:text-gray-900">
             User
           </Link>
-          {userInfo ? (
+          {userInfo?.user ? (
             <button
               onClick={signOutHandler}
               className="block text-gray-600 hover:text-gray-900"
@@ -52,8 +59,8 @@ const Navbar = () => {
               Sign-out
             </button>
           ) : (
-                        <button
-              onClick={signOutHandler}
+            <button
+              onClick={singInHandler}
               className="block text-gray-600 hover:text-gray-900"
             >
               Sign-in

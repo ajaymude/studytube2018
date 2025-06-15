@@ -22,8 +22,8 @@ const Signin = () => {
   };
 
   useEffect(() => {
-    if (userInfo) {
-      navigate("/");
+    if (userInfo?.user) {
+      navigate("/sign-in");
     }
   }, [navigate, userInfo]);
 

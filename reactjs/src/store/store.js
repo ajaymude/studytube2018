@@ -1,37 +1,52 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { persistStore, persistReducer }   from 'redux-persist';
-import storage                             from 'redux-persist/lib/storage'; // defaults to localStorage
-import authReducer                        from './auth/authSlice';
-import { apiSlice }                       from './apiSlice';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import authReducer from './auth/authSlice';
+import { apiSlice } from './apiSlice';
 
-// 1️⃣ Combine your slices
-const rootReducer = combineReducers({
-  [apiSlice.reducerPath]: apiSlice.reducer,
-  auth: authReducer,
-});
-
-// 2️⃣ Configure redux-persist
-const persistConfig = {
-  key: 'root',
+// 1️⃣ Persist only the auth slice
+const authPersistConfig = {
+  key: 'auth',
   storage,
-  whitelist: ['auth'],   // only persist the auth slice
+  whitelist: ['userInfo'], // persist only userInfo within auth
 };
 
-// 3️⃣ Create a persisted reducer
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
-// 4️⃣ Configure the store with middleware tweaks
+// 2️⃣ Combine reducers (only auth is persisted)
+const rootReducer = combineReducers({
+  [apiSlice.reducerPath]: apiSlice.reducer,
+  auth: persistedAuthReducer,
+});
+
+// 3️⃣ Configure the store with middleware tweaks
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // ignore these action types so redux-persist doesn’t trip over them
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        // Ignore redux-persist action types
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
       },
     }).concat(apiSlice.middleware),
   devTools: true,
 });
 
-// 5️⃣ Create the persistor
+// 4️⃣ Create the persistor
 export const persistor = persistStore(store);

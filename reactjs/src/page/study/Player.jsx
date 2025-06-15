@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
 const Player = () => {
   const { videoId } = useParams();
   const [currentVideo, setCurrentVideo] = useState(videoId);
+
 
   const videoList = [
     { youtubeId: "dQw4w9WgXcQ", title: "Famous Video 1", channel: "Channel 1" },
@@ -244,23 +245,21 @@ const Player = () => {
 
   const changeVideo = (youtubeId) => {
     setCurrentVideo(youtubeId);
-    console.log('vvv', currentVideo , )
   };
 
   return (
     <div className="flex  items-center ">
       <div className="mb-10 w-full flex justify-center">
-<iframe
-  width="560"
-  height="315"
-  src={`https://www.youtube.com/embed/${currentVideo}?autoplay=1`}
-  title="YouTube Video Player"
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerPolicy="strict-origin-when-cross-origin"
-  allowFullScreen
-/>
-
+        <iframe
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/${currentVideo}?autoplay=1`}
+          title="YouTube Video Player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
       </div>
 
       <div className="mb-10 w-full flex justify-center">

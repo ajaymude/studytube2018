@@ -2,9 +2,17 @@ import Navbar from "./component/Header";
 import Footer from "./component/Footer";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useGetUserQuery } from "./store/auth/authApiSlice";
+import { useEffect } from "react";
+import { setCredentials } from "./store/auth/authSlice";
 
 const App = () => {
     const navigate = useNavigate();
+    //  const { data: user, isLoading, isError } = useGetUserQuery();
+     
+    //  useEffect(()=>{
+    //   setCredentials(user)
+    //  },[])
 
   // To go back:
   const handleGoBack = () => {
