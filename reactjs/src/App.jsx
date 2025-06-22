@@ -5,14 +5,19 @@ import { ArrowLeft } from "lucide-react";
 import { useGetUserQuery } from "./store/auth/authApiSlice";
 import { useEffect } from "react";
 import { setCredentials } from "./store/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const App = () => {
-    const navigate = useNavigate();
-    //  const { data: user, isLoading, isError } = useGetUserQuery();
-     
-    //  useEffect(()=>{
-    //   setCredentials(user)
-    //  },[])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { data: user, isLoading, isError } = useGetUserQuery();
+
+  useEffect(() => {
+    // Only dispatch once we actually have a `user` object
+    if (user && !isLoading && !isError) {
+      dispatch(setCredentials(user?.data));
+    }
+  }, [user, isLoading, isError, dispatch]);
 
   // To go back:
   const handleGoBack = () => {
@@ -25,13 +30,13 @@ const App = () => {
       </header>
 
       <main className="flex-1 overflow-auto mt-20">
-              <button
-        onClick={handleGoBack}
-        className="flex items-center gap-2 px-3 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        Go Back
-      </button>
+        <button
+          onClick={handleGoBack}
+          className="flex items-center gap-2 px-3 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Go Back
+        </button>
         <Outlet />
       </main>
 

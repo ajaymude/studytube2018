@@ -24,6 +24,7 @@ export const generateAccessAndRefreshTokens = async userId => {
     return { accessToken, refreshToken };
   } catch (err) {
     // 4️⃣ If it’s already an HTTPError, re-throw it
+    console.log(err , 'ggg')
     if (err.status) throw err;
 
     // 5️⃣ Otherwise wrap it in a 500
@@ -81,18 +82,27 @@ export const signIn = asyncHandler(async (req, res) => {
   const loggedInUser = await User.findById(user._id).select('-password -refreshToken');
 
   // 5️⃣ Cookie options: secure only in prod, allow cross-site in dev
-  const cookieOptions = {
+  const commonOptions = {
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production',
-    // sameSite: 'none',
-    maxAge: 1000 * 60 * 15, // 15 minutes
+    secure: process.env.NODE_ENV === 'production', // only over HTTPS in prod
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  };
+
+  const accessTokenCookieOptions = {
+    ...commonOptions,
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+  };
+
+  const refreshTokenCookieOptions = {
+    ...commonOptions,
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
   };
 
   // 6️⃣ Send cookies and JSON response
   return res
     .status(StatusCodes.OK)
-    .cookie('accessToken', accessToken, cookieOptions)
-    .cookie('refreshToken', refreshToken, cookieOptions)
+    .cookie('accessToken', accessToken, accessTokenCookieOptions)
+    .cookie('refreshToken', refreshToken, refreshTokenCookieOptions)
     .json({
       status: 'success',
       message: getReasonPhrase(StatusCodes.OK), // "OK"

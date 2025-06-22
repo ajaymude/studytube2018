@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignoutMutation } from "../store/auth/authApiSlice";
 import { signOut } from "../store/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { persistor } from "../store/store";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +18,6 @@ const Navbar = () => {
     try {
       await signout().unwrap();
       dispatch(signOut());
-      await persistor.purge();
       navigate("/sign-in");
     } catch (err) {
       console.error(err);
