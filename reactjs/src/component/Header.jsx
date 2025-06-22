@@ -48,11 +48,20 @@ const Navbar = () => {
           <Link to="/subjects" className="text-white hover:text-gray-900">
             Subjects
           </Link>
-          {user && (
-            <Link to="/user" className="text-white hover:text-gray-900">
-              User
-            </Link>
-          )}
+          {user ? (
+            user.role === "admin" ? (
+              <Link to="/admin/admin" className="text-white hover:text-gray-900">
+                Admin
+              </Link>
+            ) : (
+              <Link to="/user" className="text-white hover:text-gray-900">
+                User
+              </Link>
+            )
+          ) : // <Link to="/sign-in" className="text-white hover:text-gray-900">
+          //   Sign-in
+          // </Link>
+          null}
           {user ? (
             <button onClick={signOutHandler}>Sign-out</button>
           ) : (
