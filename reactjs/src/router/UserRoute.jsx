@@ -3,14 +3,21 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const UserRoute = () => {
-  const { userInfo } = useSelector((state) => state.auth);
-  if (!userInfo?.user) {
+  // grab the raw user object
+  const user = useSelector((state) => state.auth.userInfo);
+
+  // if not logged in at all → send to sign-in
+  if (!user) {
     return <Navigate to="/sign-in" replace />;
   }
-  if (userInfo?.user?.role !== "user" && userInfo?.user?.role !== "admin" ) {
+
+  // if logged in but role is neither 'user' nor 'admin' → send to sign-in
+  if (user.role !== "user" && user.role !== "admin") {
     return <Navigate to="/sign-in" replace />;
   }
+
+  // otherwise, allow access to nested routes
   return <Outlet />;
 };
-export default UserRoute;
 
+export default UserRoute;

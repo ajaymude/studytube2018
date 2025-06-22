@@ -9,8 +9,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.auth.userInfo);
 
-  
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
