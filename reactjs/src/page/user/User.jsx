@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 /**
  * A form component with four select dropdowns, a text input, and a submit button.
@@ -7,28 +7,29 @@ import React, { useState } from 'react';
 const MyForm = () => {
   // Dummy options
   const dummyOptions = [
-    'Option A',
-    'Option B',
-    'Option C',
-    'Option D',
-    'Option E',
+    "Option A",
+    "Option B",
+    "Option C",
+    "Option D",
+    "Option E",
   ];
 
   const [selectedOption1, setSelectedOption1] = useState(dummyOptions[0]);
   const [selectedOption2, setSelectedOption2] = useState(dummyOptions[0]);
   const [selectedOption3, setSelectedOption3] = useState(dummyOptions[0]);
   const [selectedOption4, setSelectedOption4] = useState(dummyOptions[0]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitted:', {
+    console.log("Submitted:", {
       selectedOption1,
       selectedOption2,
       selectedOption3,
       selectedOption4,
       inputValue,
-    });``
+    });
+    ``;
   };
 
   return (
@@ -61,7 +62,11 @@ const MyForm = () => {
               required
             >
               {dummyOptions.map((opt) => (
-                <option key={`${num}-${opt}`} value={opt} className="bg-black text-white">
+                <option
+                  key={`${num}-${opt}`}
+                  value={opt}
+                  className="bg-black text-white"
+                >
                   {opt}
                 </option>
               ))}
@@ -78,6 +83,7 @@ const MyForm = () => {
             placeholder="Type here..."
             className="mt-1 block w-full border-gray-600 bg-gray-800 text-white rounded"
             required
+            autoComplete="text"
           />
         </label>
 
@@ -85,7 +91,7 @@ const MyForm = () => {
           type="submit"
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          Add 
+          Add
         </button>
       </div>
     </form>

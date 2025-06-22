@@ -26,8 +26,7 @@ const Signin = () => {
     }
   }, [navigate, userInfo]);
 
-
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await signin(formData).unwrap();
@@ -58,6 +57,7 @@ const Signin = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              autoComplete="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
           </div>
@@ -75,6 +75,7 @@ const Signin = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              autoComplete="password"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
           </div>
