@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userInfo } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.userInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Navbar = () => {
     }
   };
 
-  const singInHandler = async () => {
+  const signInHandler = async () => {
     try {
       navigate("/sign-in");
     } catch (err) {
@@ -48,25 +48,15 @@ const Navbar = () => {
           <Link to="/subjects" className="text-white hover:text-gray-900">
             Subjects
           </Link>
-          {userInfo?.user && (
+          {user && (
             <Link to="/user" className="text-white hover:text-gray-900">
               User
             </Link>
           )}
-          {userInfo?.user ? (
-            <button
-              onClick={signOutHandler}
-              className="block text-white hover:text-gray-900"
-            >
-              Sign-out
-            </button>
+          {user ? (
+            <button onClick={signOutHandler}>Sign-out</button>
           ) : (
-            <button
-              onClick={singInHandler}
-              className="block text-white hover:text-gray-900"
-            >
-              Sign-in
-            </button>
+            <button onClick={signInHandler}>Sign-in</button>
           )}
         </nav>
         <button
@@ -85,22 +75,13 @@ const Navbar = () => {
           <Link to="/about" className="block text-white hover:text-gray-900">
             About
           </Link>
-          <Link
-            to="/services"
-            className="block text-white hover:text-gray-900"
-          >
+          <Link to="/services" className="block text-white hover:text-gray-900">
             Services
           </Link>
-          <Link
-            to="/contact"
-            className="block text-white hover:text-gray-900"
-          >
+          <Link to="/contact" className="block text-white hover:text-gray-900">
             Contact
           </Link>
-          <Link
-            to="/sign-in"
-            className="block text-white hover:text-gray-900"
-          >
+          <Link to="/sign-in" className="block text-white hover:text-gray-900">
             Sign-in
           </Link>
         </nav>

@@ -122,11 +122,12 @@ export const signOut = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, { $unset: { refreshToken: 1 } });
 
   // 3️⃣ Cookie options – secure only in production, allow cross-site
-  const cookieOptions = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
-  };
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  path: '/',                // make sure path is the same too
+};
 
   // 4️⃣ Clear both tokens and respond
   return res

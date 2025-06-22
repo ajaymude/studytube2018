@@ -11,13 +11,12 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data: user, isLoading, isError } = useGetUserQuery();
-
-  useEffect(() => {
-    // Only dispatch once we actually have a `user` object
-    if (user && !isLoading && !isError) {
-      dispatch(setCredentials(user?.data));
-    }
-  }, [user, isLoading, isError, dispatch]);
+useEffect(() => {
+  if (!isLoading && !isError && user) {
+    // user.data.user is the actual user object from your API shape
+    dispatch(setCredentials({ user: user.data.user }));
+  }
+}, [user, isLoading, isError, dispatch]);
 
   // To go back:
   const handleGoBack = () => {

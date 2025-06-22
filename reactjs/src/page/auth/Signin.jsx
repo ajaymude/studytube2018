@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useSigninMutation } from "../../store/auth/authApiSlice";
-import { toast } from "react-toastify";
 import { setCredentials } from "../../store/auth/authSlice";
 
 const Signin = () => {
@@ -29,7 +28,6 @@ const Signin = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    toast.info("Logging in...");
       const res = await signin(formData).unwrap();
       dispatch(setCredentials({ ...res?.data}));
       navigate('/');
