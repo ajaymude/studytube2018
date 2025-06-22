@@ -26,11 +26,17 @@ const Signin = () => {
     }
   }, [navigate, userInfo]);
 
-  const handleSubmit = async(e) => {
+
+    const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
       const res = await signin(formData).unwrap();
-      dispatch(setCredentials({ ...res?.data}));
-      navigate('/');
+      const user = res.data.user;
+      dispatch(setCredentials(user));
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
   };
 
   return (
